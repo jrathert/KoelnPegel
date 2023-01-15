@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"time"
 )
@@ -45,8 +46,10 @@ func loadHistory() error {
 		}
 	} else {
 		if err := json.NewDecoder(bytes.NewReader(input)).Decode(&history); err != nil {
-			fmt.Println("Error decoding history:", err)
-			return err
+			if err != io.EOF {
+				fmt.Println("Error decoding history:", err)
+				return err
+			}
 		}
 	}
 	return nil
@@ -62,7 +65,7 @@ func saveHistory() error {
 		history = history[cap:]
 	}
 
-	data, err := json.Marshal(history)
+	data, err := json.MarshalIndent(history, "", "    ")
 	if err != nil {
 		fmt.Println("Error encoding history:", err)
 		return err
@@ -77,18 +80,27 @@ func saveHistory() error {
 
 func levelDifference(current Measurement, minutes int) (float64, error) {
 
+	if len(history) == 0 {
+		errMsg := "cannot determine difference - history is empty"
+		return 0.0, errors.New(errMsg)
+	}
+
 	searchTime := current.Timestamp.Add(-time.Minute * time.Duration(minutes))
 
 	matchIndex := -1
-	for i := len(history) - 1; i >= 0; i-- {
+	// history is sorted by timestamps - identify the biggest index for which
+	// the timestamp is maximum, but not bigger than searchtime
+	for i := 0; i < len(history); i++ {
 		ts := history[i].Timestamp
-		if searchTime.Before(ts) {
+		if !searchTime.Before(ts) {
 			matchIndex = i
 		}
 	}
 
 	if matchIndex == -1 {
-		errMsg := fmt.Sprintf("Error - cannot find %v in history", searchTime)
+		// all entries in history have a timestamp bigger than searchtime
+		// we take the first elem
+		errMsg := fmt.Sprintf("cannot determine difference - all elems in history %v", searchTime)
 		return 0.0, errors.New(errMsg)
 	} else {
 		diff := current.Level - history[matchIndex].Level

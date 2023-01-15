@@ -194,7 +194,7 @@ func main() {
 		fmt.Printf("%v [%v: %v] - no post\n", current, diff, tendency)
 	}
 
-	if history[len(history)-1].Timestamp.Before(current.Timestamp) {
+	if len(history) == 0 || history[len(history)-1].Timestamp.Before(current.Timestamp) {
 		history = append(history, current)
 		saveHistory()
 	}
