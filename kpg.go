@@ -185,13 +185,13 @@ func main() {
 	if doPost {
 		id, err := postToMastodon(statusText)
 		if err != nil {
-			fmt.Printf("%v [%v] - error: %v\n", current, tendency, err)
+			fmt.Printf("%v [%v: %v] - error: %v\n", current, diff, tendency, err)
 		} else {
-			fmt.Printf("%v [%v] - %v\n", current, tendency, id)
+			fmt.Printf("%v [%v: %v] - %v\n", current, diff, tendency, id)
 			savePostTime(current)
 		}
 	} else {
-		fmt.Printf("%v [%v]- no post\n", current, tendency)
+		fmt.Printf("%v [%v: %v] - no post\n", current, diff, tendency)
 	}
 
 	if history[len(history)-1].Timestamp.Before(current.Timestamp) {
