@@ -17,64 +17,41 @@ const STARK = 10 // 5 - starke Änderung cm / Zeit
 const MID = 5    // 3 - Änderung cm / Zeit
 const LOW = 5    // 1 - leichte Änderung cm / Zeit
 
-func getTendencyString(diff float64, withUnicode bool) string {
+func getTendencyString(diff float64) (string, rune) {
 	// zur Tendenz siehe: https://undine.bafg.de/rhein/zustand-aktuell/rhein_akt_WQ.html
 	//   Diffzeitraum: 4h
 	//   stark: mehr als +/-10 cm Veränderung in 4h
 	//   normal_ mehr als +/-5 cm Veränderung in 4h
 	//   konstant: bis zu +/- 5cm Veränderung in 4h
 
-	var sb strings.Builder
-
 	if diff > STARK {
-		sb.WriteString("stark steigend")
-		if withUnicode {
-			sb.WriteString(" \u2197")
-		}
+		return "stark steigend", '\u2197'
 	} else if diff > MID {
-		sb.WriteString("steigend")
-		if withUnicode {
-			sb.WriteString(" \u2197")
-		}
+		return "steigend", '\u2197'
 	} else if diff > LOW {
-		sb.WriteString("leicht steigend")
-		if withUnicode {
-			sb.WriteString(" \u2197")
-		}
+		return "leicht steigend", '\u2197'
 	} else if diff < -STARK {
-		sb.WriteString("stark fallend")
-		if withUnicode {
-			sb.WriteString(" \u2198")
-		}
+		return "stark fallend", '\u2198'
 	} else if diff < -MID {
-		sb.WriteString("fallend")
-		if withUnicode {
-			sb.WriteString(" \u2198")
-		}
+		return "fallend", '\u2198'
 	} else if diff < -LOW {
-		sb.WriteString("leicht fallend")
-		if withUnicode {
-			sb.WriteString(" \u2198")
-		}
+		return "leicht fallend", '\u2198'
 	} else {
-		sb.WriteString("konstant")
-		if withUnicode {
-			sb.WriteString(" \u27a1")
-		}
+		return "konstant", '\u27a1'
 	}
-	return sb.String()
 }
 
-func prepareStatusString(current Measurement, trend string) string {
+func prepareStatusString(current Measurement, trend string, icon rune) string {
 
 	var sb strings.Builder
 
-	if len(trend) > 0 {
-		trend = " - " + trend
-	}
 	wtime := current.Timestamp.Format("15:04")
 
-	sb.WriteString(fmt.Sprintf("Stand am Pegel Köln um %v Uhr (%v °C): %v cm%v\n", wtime, current.Temperature, current.Level, trend))
+	sb.WriteString(fmt.Sprintf("Stand am Pegel Köln um %v Uhr (%v °C): %v cm", wtime, current.Temperature, current.Level))
+	if icon != 0 {
+		sb.WriteString(fmt.Sprintf(" - %v %v", trend, string(icon)))
+	}
+	sb.WriteString("\n")
 	if current.Level >= KATA_02 {
 		sb.WriteString("\u26a0 Überflutung der Altstadt \U0001f30a, Rheinufertunnel gesperrt \U0001f6a7\n")
 	} else if current.Level >= KATA_01 {
@@ -169,17 +146,17 @@ func main() {
 
 	current := retrieveCurrentData()
 
-	var tendency, postTendency string
+	var tendency string
+	var icon rune
 	diff, err := levelDifference(current, 240)
 	if err != nil {
-		tendency = ""
-		postTendency = ""
+		tendency = "?"
+		icon = 0
 	} else {
-		tendency = getTendencyString(diff, false)
-		postTendency = getTendencyString(diff, true)
+		tendency, icon = getTendencyString(diff)
 	}
 
-	statusText := prepareStatusString(current, postTendency)
+	statusText := prepareStatusString(current, tendency, icon)
 
 	doPost := checkIfPostNow(current)
 	if doPost {
