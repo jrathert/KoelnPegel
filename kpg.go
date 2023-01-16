@@ -60,7 +60,7 @@ func prepareStatusString(current Measurement, trend string, icon rune) string {
 	if current.Level >= MARK_02 {
 		sb.WriteString("\u26a0 Hochwassermarke 2 erreicht - Schiffsverkehr gesperrt \U0001f6e5\n")
 	} else if current.Level >= MARK_01 {
-		sb.WriteString("\u26a0 Hochwassermarke 1 erreicht - Schiffsverkehr eingeschränkt \U0001f6e5\n")
+		sb.WriteString("\u26a0 Hochwassermarke 1 erreicht - Schiffsverkehr verlangsamt \U0001f6e5\n")
 	}
 	if current.Level < GLW {
 		sb.WriteString("\u26a0 Unter gleichwertigem Wasserstand - Schiffsverkehr ggf. eingeschränkt\n")
