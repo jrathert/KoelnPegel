@@ -11,6 +11,15 @@ import (
 	"golang.org/x/net/html"
 )
 
+// calcTablePosition(22)
+// calcTablePosition(23)
+// calcTablePosition(0)
+// calcTablePosition(1)
+// fmt.Println("22: ", fetchPrognosis(22))
+// fmt.Println("23: ", fetchPrognosis(23))
+// fmt.Println("00: ", fetchPrognosis(0))
+// fmt.Println("01: ", fetchPrognosis(1))
+
 func calcTablePosition(hour int) (row int, col int) {
 
 	col = 0
