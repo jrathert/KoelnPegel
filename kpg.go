@@ -103,22 +103,24 @@ func lastPostTime() (time.Time, error) {
 
 func checkIfPostNow(measurement Measurement) bool {
 
-	if measurement.Level > KATA_01 {
-		// post all available data!
-		return true
-	}
-
 	lastPost, err := lastPostTime()
 	if err != nil {
 		return false
 	}
 	diffMin := int(measurement.Timestamp.Sub(lastPost).Minutes())
-	if measurement.Level > MARK_02 {
+	if measurement.Level > KATA_02 {
+		// post all available data!
+		return true
+	} else if measurement.Level > KATA_01 {
+		// all 30 minutes
+		return diffMin >= 30 && measurement.Timestamp.Minute()%30 == 0 // 30 -> 30
+
+	} else if measurement.Level > MARK_02 {
 		// all 60 minutes
-		return diffMin >= 60 && measurement.Timestamp.Minute() == 0
+		return diffMin >= 60 && measurement.Timestamp.Minute() == 0 // 60 -> 0 (or 60!)
 	} else if measurement.Level > MARK_01 {
 		// all 120 minutes
-		return diffMin >= 120 && measurement.Timestamp.Minute() == 0 && measurement.Timestamp.Hour()%2 == 0
+		return diffMin >= 120 && measurement.Timestamp.Minute() == 0 && measurement.Timestamp.Hour()%2 == 0 // 12
 	} else {
 		// all 4 hours
 		return diffMin >= 240 && measurement.Timestamp.Minute() == 0 && measurement.Timestamp.Hour()%4 == 0
