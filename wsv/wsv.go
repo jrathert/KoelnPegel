@@ -1,4 +1,4 @@
-package main
+package wsv
 
 import (
 	"bytes"
@@ -29,7 +29,7 @@ type WsvLevelData struct {
 	TimeSeries [3]WsvSeries
 }
 
-func fetchPegelOnline() (*WsvLevelData, error) {
+func FetchPegelOnline() (*WsvLevelData, error) {
 
 	// fetch pegel from https://www.pegelonline.wsv.de/
 	uuid := "a6ee8177-107b-47dd-bcfd-30960ccc6e9c"
@@ -55,15 +55,3 @@ func fetchPegelOnline() (*WsvLevelData, error) {
 	return &result, nil
 }
 
-func retrieveCurrentData() Measurement {
-	leveldata, err := fetchPegelOnline()
-	if err != nil {
-		fmt.Println("No current data available")
-		return Measurement{}
-	}
-	return Measurement{
-		Timestamp:   leveldata.TimeSeries[0].CurrentMeasurement.Timestamp,
-		Level:       leveldata.TimeSeries[0].CurrentMeasurement.Value,
-		Temperature: leveldata.TimeSeries[2].CurrentMeasurement.Value,
-	}
-}

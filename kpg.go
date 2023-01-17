@@ -5,6 +5,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"memcpy.me/kpg/wsv"
 )
 
 const KATA_02 = 1130 // 1130 - Altstadt läuft voll
@@ -124,6 +126,19 @@ func checkIfPostNow(measurement Measurement) bool {
 	} else {
 		// all 4 hours
 		return diffMin >= 240 && measurement.Timestamp.Minute() == 0 && measurement.Timestamp.Hour()%4 == 0
+	}
+}
+
+func retrieveCurrentData() Measurement {
+	leveldata, err := wsv.FetchPegelOnline()
+	if err != nil {
+		fmt.Println("No current data available")
+		return Measurement{}
+	}
+	return Measurement{
+		Timestamp:   leveldata.TimeSeries[0].CurrentMeasurement.Timestamp,
+		Level:       leveldata.TimeSeries[0].CurrentMeasurement.Value,
+		Temperature: leveldata.TimeSeries[2].CurrentMeasurement.Value,
 	}
 }
 
