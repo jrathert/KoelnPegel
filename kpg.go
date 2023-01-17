@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"time"
@@ -75,12 +76,12 @@ func prepareStatusString(current Measurement, trend string, icon rune) string {
 func savePostTime(measurement Measurement) {
 	val, err := measurement.Timestamp.MarshalText()
 	if err != nil {
-		fmt.Println("Error encoding timestamp:", err)
+		log.Println("Error encoding timestamp:", err)
 		return
 	}
 	err = os.WriteFile(".kpg_last", val, 0664)
 	if err != nil {
-		fmt.Println("Error saving file", err)
+		log.Println("Error saving file", err)
 	}
 }
 
@@ -89,7 +90,7 @@ func lastPostTime() (time.Time, error) {
 	data, err := os.ReadFile(".kpg_last")
 	if err != nil {
 		if !os.IsNotExist(err) {
-			fmt.Println("Error reading file:", err)
+			log.Println("Error reading file:", err)
 			return ts, err
 		} else {
 			return ts, nil
@@ -97,7 +98,7 @@ func lastPostTime() (time.Time, error) {
 	}
 	err = ts.UnmarshalText(data)
 	if err != nil {
-		fmt.Println("Error decoding timestamp:", err)
+		log.Println("Error decoding timestamp:", err)
 		return ts, err
 	}
 	return ts, nil
@@ -132,7 +133,7 @@ func checkIfPostNow(measurement Measurement) bool {
 func retrieveCurrentData() Measurement {
 	leveldata, err := wsv.QueryPegelOnline()
 	if err != nil {
-		fmt.Println("No current data available")
+		log.Println("No current data available")
 		return Measurement{}
 	}
 	return Measurement{
@@ -179,7 +180,7 @@ func main() {
 	if doPost {
 		id, err := postToMastodon(statusText)
 		if err != nil {
-			fmt.Printf("%v [%v: %v] - error: %v\n", current, diff, tendency, err)
+			log.Printf("%v [%v: %v] - error: %v\n", current, diff, tendency, err)
 		} else {
 			fmt.Printf("%v [%v: %v] - %v\n", current, diff, tendency, id)
 			savePostTime(current)

@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"time"
 )
@@ -41,13 +42,13 @@ func loadHistory() error {
 	input, err := os.ReadFile(HISTORY_FILE)
 	if err != nil {
 		if !os.IsNotExist(err) {
-			fmt.Println("Error reading history file:", err)
+			log.Println("Error reading history file:", err)
 			return err
 		}
 	} else {
 		if err := json.NewDecoder(bytes.NewReader(input)).Decode(&history); err != nil {
 			if err != io.EOF {
-				fmt.Println("Error decoding history:", err)
+				log.Println("Error decoding history:", err)
 				return err
 			}
 		}
@@ -67,12 +68,12 @@ func saveHistory() error {
 
 	data, err := json.MarshalIndent(history, "", "    ")
 	if err != nil {
-		fmt.Println("Error encoding history:", err)
+		log.Println("Error encoding history:", err)
 		return err
 	}
 	err = os.WriteFile(HISTORY_FILE, data, 0664)
 	if err != nil {
-		fmt.Println("Error writing history file:", err)
+		log.Println("Error writing history file:", err)
 		return err
 	}
 	return nil

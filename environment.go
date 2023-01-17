@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -14,7 +13,7 @@ func readEnvironment(fname string) {
 		log.Fatal(err)
 	}
 	defer file.Close()
-	
+
 	input := bufio.NewScanner(file)
 	lineNo := 0
 	for input.Scan() {
@@ -25,7 +24,7 @@ func readEnvironment(fname string) {
 		}
 		elems := strings.SplitN(line, "=", 2)
 		if len(elems) != 2 {
-			fmt.Printf("Syntax error reading environment file %vin line %v ('%v') - ignoring\n", fname, lineNo, line)
+			log.Printf("Syntax error reading environment file %v in line %v ('%v') - ignoring\n", fname, lineNo, line)
 		} else {
 			os.Setenv(elems[0], elems[1])
 		}
