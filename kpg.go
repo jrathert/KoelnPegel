@@ -103,7 +103,6 @@ func lastPostTime() (time.Time, error) {
 
 func checkIfPostNow(measurement Measurement) bool {
 
-	measurement.Timestamp = measurement.Timestamp.Add(-time.Hour)
 	if measurement.Level > KATA_01 {
 		// post all available data!
 		return true
