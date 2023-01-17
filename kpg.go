@@ -130,7 +130,7 @@ func checkIfPostNow(measurement Measurement) bool {
 }
 
 func retrieveCurrentData() Measurement {
-	leveldata, err := wsv.FetchPegelOnline()
+	leveldata, err := wsv.QueryPegelOnline()
 	if err != nil {
 		fmt.Println("No current data available")
 		return Measurement{}
