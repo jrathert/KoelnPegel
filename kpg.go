@@ -145,7 +145,7 @@ func retrieveCurrentData() Measurement {
 
 func main() {
 
-	readEnvironment("mastodon.env")
+	readEnvironment("kpg.env")
 	// lst := []string{"SERVER", "CLIENT_ID", "CLIENT_SECRET", "ACCESS_TOKEN"}
 	// for _, val := range lst {
 	// 	fmt.Printf("%v: '%v'\n", val, os.Getenv(val))
