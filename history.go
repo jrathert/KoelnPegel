@@ -21,19 +21,6 @@ const HISTORY_LENGTH = 24 * 4
 // name of the file to store history in
 const HISTORY_FILE = ".kpg_history"
 
-// Measurement represents in compact form one measurement of the Cologne level
-// It has a timestamp, a water level and a water temperature
-type Measurement struct {
-	Timestamp   time.Time
-	Level       float64
-	Temperature float64
-}
-
-// String representation of a history item
-func (m Measurement) String() string {
-	return fmt.Sprintf("%v: %v cm (%v °C)", m.Timestamp, m.Level, m.Temperature)
-}
-
 // Load history from file into global variable
 // The whole file is loaded, expecting it was written with the corresponding
 // saveHistory function, that truncates numer of items appropriately
