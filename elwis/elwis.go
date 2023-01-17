@@ -1,4 +1,4 @@
-package main
+package elwis
 
 import (
 	"bytes"
@@ -34,7 +34,7 @@ func calcTablePosition(hour int) (row int, col int) {
 	return row, col
 }
 
-func fetchPrognosis(hour int) int {
+func FetchPrognosis(hour int) int {
 
 	row, col := calcTablePosition(hour)
 
