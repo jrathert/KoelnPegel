@@ -146,19 +146,6 @@ func retrieveCurrentData() Measurement {
 func main() {
 
 	readEnvironment("kpg.env")
-	// lst := []string{"SERVER", "CLIENT_ID", "CLIENT_SECRET", "ACCESS_TOKEN"}
-	// for _, val := range lst {
-	// 	fmt.Printf("%v: '%v'\n", val, os.Getenv(val))
-	// }
-
-	// calcTablePosition(22)
-	// calcTablePosition(23)
-	// calcTablePosition(0)
-	// calcTablePosition(1)
-	// fmt.Println("22: ", fetchPrognosis(22))
-	// fmt.Println("23: ", fetchPrognosis(23))
-	// fmt.Println("00: ", fetchPrognosis(0))
-	// fmt.Println("01: ", fetchPrognosis(1))
 
 	loadHistory()
 
@@ -193,14 +180,4 @@ func main() {
 		history = append(history, current)
 		saveHistory()
 	}
-
-	// direction := prognosis - int(waterlevel)
-	// trend := "konstant"
-	// if direction > 0 {
-	// 	trend = "steigend"
-	// } else {
-	// 	trend = "fallend"
-	// }
-	// wtime := timestamp.Format("15:04")
-	// fmt.Printf("Wasserstand um %v Uhr: %v cm (%v °C) - %v (%v)\n", wtime, waterlevel, watertemp, trend, prognosis)
 }
