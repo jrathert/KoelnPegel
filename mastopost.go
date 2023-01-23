@@ -9,7 +9,8 @@ import (
 )
 
 func postToMastodon(statusText string) (mastodon.ID, error) {
-	if false {
+	_, test_only := os.LookupEnv("KPG_TEST")
+	if !test_only {
 		c := mastodon.NewClient(&mastodon.Config{
 			Server:       os.Getenv("SERVER"),
 			ClientID:     os.Getenv("CLIENT_ID"),
