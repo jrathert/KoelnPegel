@@ -20,6 +20,8 @@ const STARK = 10 // 5 - starke Änderung cm / Zeit
 const MID = 5    // 3 - Änderung cm / Zeit
 const LOW = 5    // 1 - leichte Änderung cm / Zeit
 
+const LAST_FILE = ".kpg_last"
+
 // Measurement represents in compact form one measurement of the Cologne level
 // It has a timestamp, a water level and a water temperature
 type Measurement struct {
@@ -105,7 +107,7 @@ func savePostTime(measurement Measurement) {
 		log.Println("Error encoding timestamp:", err)
 		return
 	}
-	err = os.WriteFile(".kpg_last", val, 0664)
+	err = os.WriteFile(LAST_FILE, val, 0664)
 	if err != nil {
 		log.Println("Error saving file", err)
 	}
@@ -113,7 +115,7 @@ func savePostTime(measurement Measurement) {
 
 func lastPostTime() (time.Time, error) {
 	ts := time.Unix(0, 0)
-	data, err := os.ReadFile(".kpg_last")
+	data, err := os.ReadFile(LAST_FILE)
 	if err != nil {
 		if !os.IsNotExist(err) {
 			log.Println("Error reading file:", err)
@@ -143,7 +145,6 @@ func checkIfPostNow(measurement Measurement) bool {
 	} else if measurement.Level > KATA_01 {
 		// all 30 minutes
 		return diffMin >= 30 && measurement.Timestamp.Minute()%30 == 0 // 30 -> 30
-
 	} else if measurement.Level > MARK_02 {
 		// all 60 minutes
 		return diffMin >= 60 && measurement.Timestamp.Minute() == 0 // 60 -> 0 (or 60!)
