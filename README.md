@@ -59,6 +59,8 @@ Code is split across a couple of files:
 
 During development, you might set the environment variable `KPG_TEST` to some value to  avoid posting to Mastodon but print the post to stdout instead.
 
+Please note: I am not a professional developer, I am new to the go language and this is just a pet project. There is little documentation in the code, there is no error handling (except writing to stdout) and many things can be made better, I guess. But it was fun, and I got a couple of followers on [Mastodon](https://social.cologne/@pegelkoeln). 😉
+
 
 ## License
 
