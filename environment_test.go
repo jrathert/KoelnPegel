@@ -13,7 +13,4 @@ func TestReadEnvironment(t *testing.T) {
 			t.Errorf(`readEnvironment: env key %v not present`, key)
 		}
 	}
-	// if os.Getenv("SERVER") != "https://social.cologne" {
-	// }
-
 }
