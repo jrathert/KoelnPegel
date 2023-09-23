@@ -42,7 +42,17 @@ func fetchWsvJSON() ([]byte, error) {
 	// fetch pegel from https://www.pegelonline.wsv.de/
 	uuid := "a6ee8177-107b-47dd-bcfd-30960ccc6e9c"
 	url := "https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/" + uuid + ".json?includeTimeseries=true&includeCurrentMeasurement=true"
-	resp, err := http.Get(url)
+
+	// user_agent := "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+	user_agent := "Mastodon Bot/1.0"
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	req.Header.Set("User-Agent", user_agent)
+	resp, err := client.Do(req)
+
 	if err != nil {
 		log.Printf("Error getting url %v: %v\n", url, err)
 		return nil, err
