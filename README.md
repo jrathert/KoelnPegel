@@ -1,6 +1,6 @@
 # KoelnPegel
 
-This is just a smal "pet project" I did to learn a little bit about the go programming language.
+This is just a small "pet project" I did to learn a little bit about the go programming language.
 
 The program, when called, reads data on the current/last known figures about the "Pegel Köln", measuring water level and temperature of the river Rhine in Cologne. It then does - depending on a few rules - do a little post on Mastodon.
 
