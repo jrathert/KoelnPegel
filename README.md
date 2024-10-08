@@ -61,6 +61,10 @@ During development, you might set the environment variable `KPG_TEST` to some va
 
 Please note: I am not a professional developer, I am new to the go language and this is just a pet project. There is little documentation in the code, there is no error handling (except writing to stdout) and many things can be made better, I guess. But it was fun, and I got a couple of followers on [Mastodon](https://social.cologne/@pegelkoeln). 😉
 
+## Notes
+
+Originally, the program fetched and then posted water level as well as water temperature. However, in August 2024, the API started not to deliver the temperature any more. So the posting style changed. We log the temperature, however, to understand if it returns some day.
+
 
 ## License
 
