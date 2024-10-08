@@ -10,7 +10,8 @@
             "request": "launch",
             "mode": "auto",
             "env": { "KPG_TEST": "1" },
-            "program": "${fileDirname}"
+            // "program": "kpg.go",
+            "program": "${fileDirname}",
         }
     ]
 }
