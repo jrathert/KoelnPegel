@@ -66,6 +66,34 @@ func saveHistory() error {
 	return nil
 }
 
+//
+// These two functions were planned to improve reporting, but are not in use
+// yet - therefore commented them out for now to avoid any warnings
+//
+// func hasJustCrossedThreshold(m Measurement, threshold float64) bool {
+// 	if m.Level <= threshold {
+// 		return false
+// 	}
+// 	if len(history) == 0 {
+// 		return true
+// 	} else {
+// 		return history[len(history)-1].Level < threshold
+// 	}
+
+// }
+
+// func getDiffToLast(m Measurement) float64 {
+// 	if len(history) == 0 {
+// 		loadHistory()
+// 	}
+// 	if len(history) == 0 {
+// 		return m.Level
+// 	} else {
+// 		return m.Level - history[len(history)-1].Level
+// 	}
+
+// }
+
 func levelDifference(current Measurement, minutes int) (float64, error) {
 
 	if len(history) == 0 {
