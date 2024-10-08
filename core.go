@@ -56,19 +56,19 @@ func getTendencyString(diff float64) (string, rune) {
 	//   konstant: bis zu +/- 5cm Veränderung in 4h
 
 	if diff > STARK {
-		return "stark steigend", '\u2197'
+		return "stark steigend", '\u2197' // ↗
 	} else if diff > MID {
-		return "steigend", '\u2197'
+		return "steigend", '\u2197' // ↗
 	} else if diff > LOW {
-		return "leicht steigend", '\u2197'
+		return "leicht steigend", '\u2197' // ↗
 	} else if diff < -STARK {
-		return "stark fallend", '\u2198'
+		return "stark fallend", '\u2198' // ↘
 	} else if diff < -MID {
-		return "fallend", '\u2198'
+		return "fallend", '\u2198' //  ↘
 	} else if diff < -LOW {
-		return "leicht fallend", '\u2198'
+		return "leicht fallend", '\u2198' // ↘
 	} else {
-		return "konstant", '\u27a1'
+		return "konstant", '\u27a1' // ➡
 	}
 }
 
@@ -78,7 +78,8 @@ func prepareStatusString(current Measurement, trend string, icon rune) string {
 
 	wtime := current.Timestamp.Format("15:04")
 
-	sb.WriteString(fmt.Sprintf("Stand am Pegel Köln um %v Uhr (%v °C): %v cm", wtime, current.Temperature, current.Level))
+	// sb.WriteString(fmt.Sprintf("Stand am Pegel Köln um %v Uhr (%v °C): %v cm", wtime, current.Temperature, current.Level))
+	sb.WriteString(fmt.Sprintf("Stand am Pegel Köln um %v Uhr: %v cm", wtime, current.Level))
 	if icon != 0 {
 		sb.WriteString(fmt.Sprintf(" - %v %v", trend, string(icon)))
 	}
