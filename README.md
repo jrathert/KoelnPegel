@@ -6,6 +6,7 @@ The program, when called, reads data on the current/last known figures about the
 
 The level and temperature data is received from a public service of [PEGELONLINE](https://www.pegelonline.wsv.de/), leveraging their REST API.
 
+They also provide nice graphs: https://www.pegelonline.wsv.de/charts/OnlineVisualisierungGanglinie?pegeluuid=a6ee8177-107b-47dd-bcfd-30960ccc6e9c&anzeigeUeberschrift=false&textUnten=&&anzeigeDatenquelle=false&schriftPegelname=11
 
 
 ## Runtime information
@@ -63,7 +64,9 @@ Please note: I am not a professional developer, I am new to the go language and 
 
 ## Notes
 
-Originally, the program fetched and then posted water level as well as water temperature. However, in August 2024, the API started not to deliver the temperature any more. So the posting style changed. We log the temperature, however, to understand if it returns some day.
+~~Originally, the program fetched and then posted water level as well as water temperature. However, in August 2024, the API started not to deliver the temperature any more. So the posting style changed. We log the temperature, however, to understand if it returns some day.~~
+
+Works again (since end October 2024 - just realized 10 January 2025)
 
 
 ## License

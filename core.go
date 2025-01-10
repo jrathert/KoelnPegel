@@ -78,8 +78,8 @@ func prepareStatusString(current Measurement, trend string, icon rune) string {
 
 	wtime := current.Timestamp.Format("15:04")
 
-	// sb.WriteString(fmt.Sprintf("Stand am Pegel Köln um %v Uhr (%v °C): %v cm", wtime, current.Temperature, current.Level))
-	sb.WriteString(fmt.Sprintf("Stand am Pegel Köln um %v Uhr: %v cm", wtime, current.Level))
+	sb.WriteString(fmt.Sprintf("Stand am Pegel Köln um %v Uhr (%v °C): %v cm", wtime, current.Temperature, current.Level))
+	// sb.WriteString(fmt.Sprintf("Stand am Pegel Köln um %v Uhr: %v cm", wtime, current.Level))
 	if icon != 0 {
 		sb.WriteString(fmt.Sprintf(" - %v %v", trend, string(icon)))
 	}
