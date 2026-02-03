@@ -41,10 +41,19 @@ func retrieveCurrentData() Measurement {
 		log.Println("No current data available")
 		return Measurement{}
 	}
+	wIdx := -1
+	tIdx := -1
+	for i, ts := range leveldata.TimeSeries {
+		if ts.Shortname == "W" {
+			wIdx = i
+		} else if ts.Shortname == "WT" {
+			tIdx = i
+		}
+	}
 	return Measurement{
-		Timestamp:   leveldata.TimeSeries[0].CurrentMeasurement.Timestamp,
-		Level:       leveldata.TimeSeries[0].CurrentMeasurement.Value,
-		Temperature: leveldata.TimeSeries[2].CurrentMeasurement.Value,
+		Timestamp:   leveldata.TimeSeries[wIdx].CurrentMeasurement.Timestamp,
+		Level:       leveldata.TimeSeries[wIdx].CurrentMeasurement.Value,
+		Temperature: leveldata.TimeSeries[tIdx].CurrentMeasurement.Value,
 	}
 }
 
