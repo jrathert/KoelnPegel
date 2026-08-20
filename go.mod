@@ -1,13 +1,13 @@
 module memcpy.me/kpg
 
-go 1.19
+go 1.25.0
 
 require (
-	github.com/mattn/go-mastodon v0.0.6
-	golang.org/x/net v0.5.0
+	github.com/mattn/go-mastodon v0.0.13
+	golang.org/x/net v0.58.0
 )
 
 require (
-	github.com/gorilla/websocket v1.5.0 // indirect
-	github.com/tomnomnom/linkheader v0.0.0-20180905144013-02ca5825eb80 // indirect
+	github.com/gorilla/websocket v1.5.3 // indirect
+	github.com/tomnomnom/linkheader v0.0.0-20250811210735-e5fe3b51442e // indirect
 )
